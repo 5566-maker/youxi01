@@ -1,0 +1,8 @@
+node_modules
+dist/
+public/wasm/
+public/models/
+captures/
+*.log
+.DS_Store
+captures-dist/

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手势太阳系</title>
+    <meta name="description" content="张开手掌拉远看整个太阳系，握拳拉近。一个用摄像头手势控制的 3D 太阳系。" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 L7 18 L25 18 Z' fill='%234de3b0'/%3E%3Crect x='14' y='18' width='4' height='6' fill='%23ffd98a'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div id="stage"></div>
+    <video id="cam" playsinline muted></video>
+    <canvas id="preview" class="hidden" width="200" height="150"></canvas>
+
+    <div id="hud" class="hud hidden">
+      <span id="mode" data-state="none">未检测到手</span>
+      <span class="hint">手掌左右移动 · 转动视角</span>
+    </div>
+
+    <section id="title" class="card hidden">
+      <h1>手势太阳系</h1>
+      <svg class="gesture" viewBox="0 0 120 96" aria-hidden="true">
+        <ellipse class="orbit" cx="60" cy="48" rx="26" ry="11" />
+        <ellipse class="orbit" cx="60" cy="48" rx="46" ry="20" />
+        <circle class="sun" cx="60" cy="48" r="9" />
+        <circle class="planet" cx="86" cy="48" r="3.2" />
+        <circle class="planet gold" cx="14" cy="48" r="4" />
+      </svg>
+      <p><b>张开手掌</b>，镜头拉远，八颗行星散开成全景；<b>握紧拳头</b>，轨道收拢、镜头推近。<br />手掌左右移动转动视角，上下移动抬高或压低视线。</p>
+      <div class="row">
+        <button id="b-cam">使用摄像头</button>
+        <button id="b-mouse" class="ghost">用鼠标玩</button>
+      </div>
+      <p id="err" class="err"></p>
+      <p class="small">画面只在你的设备上处理，不会上传。鼠标：按住左键 = 张开，松开 = 握拳；空格切换，M 静音，<b>X 切换左右方向</b>。<br />行星贴图 © <a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noreferrer">Solar System Scope</a>（CC BY 4.0）。</p>
+    </section>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

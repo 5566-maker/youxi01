@@ -1,0 +1,88 @@
+:root {
+  --ink: #eafff5;
+  --ink-dim: rgba(214, 245, 232, 0.7);
+  --gold: #ffd98a;
+  --emerald: #4de3b0;
+  --card: rgba(5, 16, 15, 0.82);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; height: 100%; overflow: hidden; background: #04060d; color: var(--ink);
+  font: 500 16px/1.55 Manrope, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+#stage, #stage canvas { position: fixed; inset: 0; display: block; }
+#cam { display: none; }
+.hidden { display: none !important; }
+
+#preview {
+  position: fixed; right: 16px; bottom: 16px; width: 168px; height: 126px;
+  border-radius: 12px; border: 1px solid rgba(120, 255, 210, 0.28); opacity: 0.85;
+}
+
+.hud {
+  position: fixed; top: 20px; left: 0; right: 0; display: flex; justify-content: space-between;
+  align-items: baseline; padding: 0 28px; pointer-events: none; gap: 16px;
+}
+#mode {
+  font: 500 14px/1 Manrope, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  letter-spacing: 0.16em; padding: 9px 15px; border-radius: 999px;
+  background: rgba(10, 28, 24, 0.5); border: 1px solid rgba(120, 255, 210, 0.18);
+  color: var(--ink-dim); transition: color 0.25s, border-color 0.25s;
+}
+#mode[data-state="open"] { color: var(--gold); border-color: rgba(255, 217, 138, 0.45); }
+#mode[data-state="fist"] { color: var(--emerald); border-color: rgba(77, 227, 176, 0.45); }
+.hud .hint { font-size: 12.5px; color: var(--ink-dim); letter-spacing: 0.04em; }
+
+.card {
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(540px, calc(100vw - 32px)); padding: 34px 34px 26px; border-radius: 20px;
+  background: var(--card); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(120, 255, 210, 0.14); text-align: center;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+.card h1 {
+  margin: 0 0 2px; font: 400 42px/1.15 Fraunces, Georgia, "Songti SC", serif; letter-spacing: 0.04em;
+}
+.card p { margin: 14px 0; color: var(--ink-dim); font-size: 14.5px; line-height: 1.8; }
+.card b { color: var(--ink); font-weight: 700; }
+.card .small { font-size: 12.5px; opacity: 0.75; margin-top: 18px; line-height: 1.7; }
+.card .small a { color: rgba(140, 210, 255, 0.9); text-decoration: none; border-bottom: 1px solid rgba(140, 210, 255, 0.3); }
+.card .small a:hover { color: #bfe6ff; }
+.err { color: #ffb4a0 !important; min-height: 1em; font-size: 12.5px; margin: 12px 0 0 !important; line-height: 1.7; white-space: pre-line; text-align: left; }
+
+.gesture { width: 150px; height: 118px; margin: 10px auto 0; display: block; }
+.gesture .orbit { fill: none; stroke: rgba(120, 200, 255, 0.32); stroke-width: 1; }
+.gesture .sun { fill: var(--gold); animation: twinkle 3.2s ease-in-out infinite; }
+.gesture .planet { fill: rgba(140, 210, 255, 0.85); }
+.gesture .planet.gold { fill: rgba(255, 217, 138, 0.8); }
+@keyframes twinkle { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+.row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
+button {
+  font: 700 15px/1 Manrope, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  padding: 14px 22px; border-radius: 999px; cursor: pointer; border: 0;
+  background: linear-gradient(180deg, #5cf0c2, #24c795); color: #04120d;
+  transition: filter 0.15s, transform 0.12s;
+}
+button:hover { filter: brightness(1.08); }
+button:active { transform: scale(0.98); }
+button:disabled { opacity: 0.55; cursor: default; filter: none; }
+button.ghost { background: transparent; color: var(--ink); border: 1px solid rgba(120, 255, 210, 0.3); }
+
+.planet-label {
+  position: absolute; left: 0; top: 0; pointer-events: none; opacity: 0;
+  font: 500 12px/1 Manrope, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  letter-spacing: 0.14em; color: rgba(205, 235, 255, 0.92);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95); white-space: nowrap;
+  padding: 3px 7px; border-radius: 5px; background: rgba(2, 7, 16, 0.62);
+  transition: opacity 0.25s;
+}
+
+@media (prefers-reduced-motion: reduce) { .gesture .sun { animation: none; } }
+@media (max-width: 520px) {
+  .card h1 { font-size: 32px; }
+  .card { padding: 26px 22px 20px; }
+  #preview { width: 120px; height: 90px; }
+  .hud .hint { display: none; }
+}
